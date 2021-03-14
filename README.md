@@ -2,6 +2,7 @@
 ## Functions for importing µsurf confocal microscope binary file formats
 
 Supports only the OM_MS_2.0 file versions.
+  
 
 ### Supported Formats:
 Format | Supported Features
@@ -12,7 +13,7 @@ Format | Supported Features
 .sms       | x and y coordinates, image and intensity data for each individual image
 .smt       | same file structure as .sms
 .smi       | (experimental) image count in x and y direction as well as the overlap parameter
-
+  
 
 ### Usage
 Function names consists of `read` + `file extensions`  
@@ -28,6 +29,7 @@ x, y, image, intensity = mur.readnms("D:\Measurement.nms")
 x, y, images, intensities = mur.readsms("D:\Measurement.sms")
 
 ```
+  
 
 ### Required Packages
 `numpy, struct`
