@@ -1,11 +1,11 @@
 # musurf-reader
 ## Functions for importing µsurf confocal microscope binary file formats
 
-Supports only the OM_MS_2.0 file versions.
+Support for OM_MS_2.0 file versions only.
 <br/>
 <br/>
 
-### Supported Formats:
+### Supported Formats
 Format | Supported Features
 ------------ | -------------
 .nms       | x and y coordinates, image and intensity data
