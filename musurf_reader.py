@@ -102,8 +102,8 @@ def readnms(path):
         intensity:  intensity image (numpy 2D array)
     """
     checktype(path, ".nms")
-    x, y, Images, intensities = readImages(path, single=True)
-    return x, y, Images[0], intensities[0]
+    x, y, images, intensities = readImages(path, single=True)
+    return x, y, images[0], intensities[0]
 
 
 
@@ -117,8 +117,8 @@ def readorginal(path):
         intensity:  intensity image (numpy 2D array)
     """
     checktype(path, ".orginal")
-    x, y, Images, intensities = readImages(path, single=True)
-    return x, y, Images[0], intensities[0]
+    x, y, images, intensities = readImages(path, single=True)
+    return x, y, images[0], intensities[0]
 
 
 
@@ -174,7 +174,7 @@ def readImages(path, single):
     IDS = nx * ny * DPS  # size of image data in bytes
 
     # initialize lists and vectors
-    Images = []
+    images = []
     intensities = []
     x = np.arange(0, nx*dx, dx)
     y = np.arange(0, ny*dy, dy)
@@ -191,22 +191,22 @@ def readImages(path, single):
         f_high = struct.unpack('<d', data[off+140:off+148])[0]
 
         # binary ushort data to numpy float array
-        Image = data[off+ImHS:off+ImHS+IDS] # data region
-        Image = Image[1::2]*256 + Image[::2] # ushort to int, ~40x faster than using list() and struct.iter_unpack('<H')
-        Image = f_low + (f_high - f_low)/(n_high-n_low) * Image # calculate scaled float values
+        image = data[off+ImHS:off+ImHS+IDS] # data region
+        image = image[1::2]*256 + image[::2] # ushort to int, ~40x faster than using list() and struct.iter_unpack('<H')
+        image = f_low + (f_high - f_low)/(n_high-n_low) * image # calculate scaled float values
 
         # use intensity to mask out bad values
         if has_intensity:
             intensity = data[off+ImHS+IDS:off+ImHS+IDS+nx*ny]
-            Image[intensity==0] = np.nan
+            image[intensity==0] = np.nan
             intensity = np.array(intensity)
             intensities.append(intensity.reshape((ny, nx)))
 
         # make 2D matrix from vector and append
-        Image = Image.reshape((ny, nx))
-        Images.append(Image)
+        image = image.reshape((ny, nx))
+        images.append(image)
 
         # set start of next image
         off += ImHS + IDS + ny*nx*has_intensity
 
-    return x, y, Images, intensities
+    return x, y, images, intensities
