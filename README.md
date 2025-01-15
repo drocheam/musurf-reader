@@ -42,6 +42,6 @@ x, y, images, intensities = mur.readsms("D:\Measurement.sms")
 <br/>
   
 ### Required Packages
-`numpy, struct`
+`numpy`
   
-Tested with Python 3.8 and PyCharm 2020.3.2
+Tested with Python 3.8 and numpy 1.17
